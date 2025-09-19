@@ -1,13 +1,16 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <random>
 
 class RandomCell {
 private:
-    int size;
+    int board_size;
+    std::mt19937 rnd;
+    std::uniform_int_distribution<> dist;
 public:
     RandomCell(int n);
-    std::pair<int, int> operator()(int n);
+    std::pair<int, int> operator()();
 };
 
 class Board {
