@@ -875,7 +875,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "board_simulation_lab1"
+			"value" : "practic"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1307,6 +1307,42 @@
 		},
 		{
 			"name" : "board_simulation_lab1_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/SuAnDm/Documents/GitHub/board_simulation_lab1"
+		},
+		{
+			"name" : "practic_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/SuAnDm/Documents/GitHub/board_simulation_lab1/cmake-build-debug"
+		},
+		{
+			"name" : "practic_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "practic_SOURCE_DIR",
 			"properties" : 
 			[
 				{

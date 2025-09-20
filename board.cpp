@@ -51,20 +51,23 @@ bool Board::is_valid_cell(int row, int col) {
 }
 
 std::vector<std::pair<int, int>> Board::get_neighbors(int row, int col) {
-    return {
-        {row, col}, {row - 1, col}, {row + 1, col},
-        {row, col - 1}, {row, col + 1},
-        {row - 1, col - 1}, {row - 1, col + 1},
-        {row + 1, col - 1}, {row + 1, col + 1}
-    };
+    std::vector<std::pair<int, int>> neighbors;
+
+    for (int r = -1; r <= 1; r++) {
+        for (int c = -1; c <= 1; c++) {
+            int new_r = row + r;
+            int new_c = col + c;
+            if (is_valid_cell(new_r, new_c)) {
+                neighbors.emplace_back(new_r, new_c);
+            }
+        }
+    }
 }
 
 
 void Board::mark_cell(int row, int col) {
     for (auto [r, c] : get_neighbors(row, col)) {
-        if (is_valid_cell(r, c)) {
-            cells[r][c] = true;
-        }
+        cells[r][c] = true;
     }
 }
 
