@@ -1,5 +1,6 @@
 #include <iostream>
-#include <board.h>
+#include "board.h"
+
 int main() {
     int n = 8;
     int m = 4;

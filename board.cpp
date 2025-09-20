@@ -12,9 +12,9 @@ std::pair<int, int> RandomCell::operator()() {
 
 void run_experiment(int n, int m, int trials) {
     Board board(n);
-    RandomCell generator(m);
+    RandomCell generator(n);
     Statistics stats;
-    for (int i=0; i<trials-1; i++) {
+    for (int i=0; i<trials; i++) {
         board.clear();
         std::set<std::pair<int, int>> selected_cells;
         for (int k=0; k<m; k++) {
@@ -27,7 +27,9 @@ void run_experiment(int n, int m, int trials) {
                 board.mark_cell(neighbor.first, neighbor.second);
             }
         }
+        stats.add_result(board.get_free_zone_size());
     }
+    stats.print_summary();
 }
 
 
