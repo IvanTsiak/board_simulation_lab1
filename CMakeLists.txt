@@ -1,11 +1,9 @@
-cmake_minimum_required(VERSION 3.29)
-project(board_simulation_lab1)
-
-set(CMAKE_CXX_STANDARD 14)
-
-include_directories(.)
-
-add_executable(board_simulation_lab1
-    board.cpp
-    board.h
-    main.cpp)
+cmake_minimum_required(VERSION 3.8)
+project(practic LANGUAGES C CXX)
+add_compile_options(/W3)
+add_compile_options(/std:c++20)
+add_compile_options(/EHsc)
+add_executable(out
+main.cpp
+board.cpp
+)
