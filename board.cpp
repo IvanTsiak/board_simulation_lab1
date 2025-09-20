@@ -22,7 +22,7 @@ void run_experiment(int n, int m, int trials) {
         }
         for (const auto &cell : selected_cells) {
             board.mark_cell(cell.first, cell.second);
-            std::vector<std::pair<int, int>> neighbors = Board::get_neighbors(cell.first, cell.second);
+            std::vector<std::pair<int, int>> neighbors = board.get_neighbors(cell.first, cell.second);
             for (const auto &neighbor : neighbors) {
                 board.mark_cell(neighbor.first, neighbor.second);
             }
@@ -62,6 +62,8 @@ std::vector<std::pair<int, int>> Board::get_neighbors(int row, int col) {
             }
         }
     }
+
+    return neighbors;
 }
 
 
