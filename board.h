@@ -23,7 +23,7 @@ public:
     int get_free_zone_size();
     bool is_valid_cell(int row, int col);
     void clear();
-    static std::vector<std::pair<int, int>> get_neighbors(int row, int col);
+    std::vector<std::pair<int, int>> get_neighbors(int row, int col);
 };
 
 class Statistics {
