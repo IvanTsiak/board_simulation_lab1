@@ -2,13 +2,17 @@
 #include "board.h"
 
 int main() {
-    int n = 8;
-    int m = 4;
-    int trials = 100000;
+    int n = 20;
+    int trials = 1000;
 
-    std::cout << "n=" << n << std::endl << "m=" << m << std::endl << "trials=" << trials << std::endl;
+    std::vector<int> values = {10, 20, 50, 100, 200};
 
-    run_experiment(n, m, trials);
+    std::cout << "\nn=" << n << "\ntrials=" << trials << std::endl;
+
+    for (int m : values) {
+        std::cout << "\nm = " << m << " :\n";
+        run_experiment(n, m, trials);
+    }
 
     return 0;
 }
