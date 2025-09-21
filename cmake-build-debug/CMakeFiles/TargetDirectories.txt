@@ -1,3 +1,0 @@
-C:/Users/SuAnDm/Documents/GitHub/board_simulation_lab1/cmake-build-debug/CMakeFiles/out.dir
-C:/Users/SuAnDm/Documents/GitHub/board_simulation_lab1/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/SuAnDm/Documents/GitHub/board_simulation_lab1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
