@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <utility>
 #include <random>
 
 class RandomCell {
@@ -20,10 +21,10 @@ private:
 public:
     Board(int size);
     void mark_cell(int row, int col);
-    int get_free_zone_size();
-    bool is_valid_cell(int row, int col);
+    int get_free_zone_size() const;
+    bool is_valid_cell(int row, int col) const;
     void clear();
-    std::vector<std::pair<int, int>> get_neighbors(int row, int col);
+    std::vector<std::pair<int, int>> get_neighbors(int row, int col) const;
 };
 
 class Statistics {
@@ -31,9 +32,9 @@ private:
     std::vector<int> m_results;
 public:
     void add_result(int result);
-    double mean();
-    double median();
-    void print_summary();
+    double mean() const;
+    double median() const;
+    void print_summary() const;
 };
 
 void run_experiment(int n, int m, int trials);
