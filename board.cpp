@@ -32,8 +32,6 @@ void run_experiment(int n, int m, int trials) {
     stats.print_summary();
 }
 
-
-//class Board
 Board::Board(int size) : size(size), cells(size, std::vector<bool>(size, false)) {
     if (size <= 0) {
         throw std::invalid_argument("Board size must be > 0");
@@ -46,11 +44,11 @@ void Board::clear() {
     }
 }
 
-bool Board::is_valid_cell(int row, int col) {
+bool Board::is_valid_cell(int row, int col) const {
     return row >= 0 && row < size && col >= 0 && col < size;
 }
 
-std::vector<std::pair<int, int>> Board::get_neighbors(int row, int col) {
+std::vector<std::pair<int, int>> Board::get_neighbors(int row, int col) const {
     std::vector<std::pair<int, int>> neighbors;
 
     for (int r = -1; r <= 1; r++) {
@@ -76,7 +74,7 @@ void Board::mark_cell(int row, int col) {
     }
 }
 
-int Board::get_free_zone_size() {
+int Board::get_free_zone_size() const {
     int count = 0;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -89,12 +87,11 @@ int Board::get_free_zone_size() {
 }
 
 
-//class Statistics
 void Statistics::add_result(int result) {
     m_results.push_back(result);
 }
 
-double Statistics::mean() {
+double Statistics::mean() const {
     if (m_results.empty()) return 0.0;
     double sum = 0.0;
     for (int value : m_results) {
@@ -103,7 +100,7 @@ double Statistics::mean() {
     return sum / m_results.size();
 }
 
-double Statistics::median() {
+double Statistics::median() const {
     if (m_results.empty()) return 0.0;
     std::vector<int> sorted = m_results;
     std::sort(sorted.begin(), sorted.end());
@@ -115,7 +112,7 @@ double Statistics::median() {
     }
 }
 
-void Statistics::print_summary() {
+void Statistics::print_summary() const {
     std::cout << "Mean free zone: " << mean() << "\n";
     std::cout << "Median free zone: " << median() << "\n";
 }
