@@ -92,7 +92,9 @@ void Statistics::add_result(int result) {
 }
 
 double Statistics::mean() const {
-    if (m_results.empty()) return 0.0;
+    if (m_results.empty()) {
+        return 0.0;
+    }
     double sum = 0.0;
     for (int value : m_results) {
         sum += value;
