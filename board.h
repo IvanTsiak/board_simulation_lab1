@@ -6,20 +6,20 @@
 
 class RandomCell {
 private:
-    int board_size;
+    size_t board_size;
     std::mt19937 rnd;
     std::uniform_int_distribution<> dist;
 public:
-    RandomCell(int n);
+    RandomCell(size_t b_size);
     std::pair<int, int> operator()();
 };
 
 class Board {
 private:
-    int size;
+    size_t size;
     std::vector<std::vector<bool>> cells;
 public:
-    Board(int size);
+    Board(size_t size);
     void mark_cell(int row, int col);
     int get_free_zone_size() const;
     bool is_valid_cell(int row, int col) const;
@@ -37,4 +37,4 @@ public:
     void print_summary() const;
 };
 
-void run_experiment(int n, int m, int trials);
+void run_experiment(size_t board_size, size_t num_sel_cells, size_t trials);

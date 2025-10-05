@@ -3,21 +3,34 @@
 #include <stdexcept>
 #include <algorithm>
 
-RandomCell::RandomCell(int n)
-    : board_size(n), rnd(std::random_device()()), dist(0, board_size-1){}
+RandomCell::RandomCell(size_t b_size)
+    : board_size(b_size), rnd(std::random_device()()) {
+    if (b_size == 0) {
+        throw std::invalid_argument("Board size must be > 0");
+    }
+    dist = std::uniform_int_distribution<>(0, (int)board_size - 1);
+    }
 
 std::pair<int, int> RandomCell::operator()() {
     return {dist(rnd), dist(rnd)};
 }
 
-void run_experiment(int n, int m, int trials) {
-    Board board(n);
-    RandomCell generator(n);
+void run_experiment(size_t board_size, size_t num_sel_cells, size_t trials) {
+    if (num_sel_cells ==0) {
+        throw std::invalid_argument("Number of selected cells must be > 0");
+    }
+    if (trials == 0) {
+        throw std::invalid_argument("Number of trials must be > 0");
+    }
+
+    Board board(board_size);
+    RandomCell generator(board_size);
     Statistics stats;
-    for (int i=0; i<trials; i++) {
+
+    for (size_t i=0; i<trials; i++) {
         board.clear();
         std::set<std::pair<int, int>> selected_cells;
-        for (int k=0; k<m; k++) {
+        for (size_t k=0; k<num_sel_cells; k++) {
             selected_cells.insert(generator());
         }
         for (const auto &cell : selected_cells) {
@@ -32,8 +45,8 @@ void run_experiment(int n, int m, int trials) {
     stats.print_summary();
 }
 
-Board::Board(int size) : size(size), cells(size, std::vector<bool>(size, false)) {
-    if (size <= 0) {
+Board::Board(size_t size) : size(size), cells(size, std::vector<bool>(size, false)) {
+    if (size == 0) {
         throw std::invalid_argument("Board size must be > 0");
     }
 }
@@ -75,15 +88,15 @@ void Board::mark_cell(int row, int col) {
 }
 
 int Board::get_free_zone_size() const {
-    int count = 0;
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    size_t count = 0;
+    for (size_t i = 0; i < size; i++) {
+        for (size_t j = 0; j < size; j++) {
             if (!cells[i][j]) {
                 count++;
             }
         }
     }
-    return count;
+    return (int)count;
 }
 
 
@@ -103,7 +116,9 @@ double Statistics::mean() const {
 }
 
 double Statistics::median() const {
-    if (m_results.empty()) return 0.0;
+    if (m_results.empty()) {
+        return 0.0;
+    }
     std::vector<int> sorted = m_results;
     std::sort(sorted.begin(), sorted.end());
     size_t n = sorted.size();
