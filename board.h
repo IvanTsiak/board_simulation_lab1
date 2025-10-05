@@ -10,7 +10,7 @@ private:
     std::mt19937 rnd;
     std::uniform_int_distribution<> dist;
 public:
-    RandomCell(int n);
+    RandomCell(int b_size);
     std::pair<int, int> operator()();
 };
 
@@ -37,4 +37,4 @@ public:
     void print_summary() const;
 };
 
-void run_experiment(int n, int m, int trials);
+void run_experiment(int board_size, int m, int trials);

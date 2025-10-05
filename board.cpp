@@ -3,32 +3,50 @@
 #include <stdexcept>
 #include <algorithm>
 
-RandomCell::RandomCell(int n)
-    : board_size(n), rnd(std::random_device()()), dist(0, board_size-1){}
+RandomCell::RandomCell(int b_size)
+    : board_size(b_size), rnd(std::random_device()()) {
+    if (b_size <= 0) {
+        throw std::invalid_argument("Board size must be > 0");
+    }
+    dist = std::uniform_int_distribution<>(0, board_size - 1);
+    }
 
 std::pair<int, int> RandomCell::operator()() {
     return {dist(rnd), dist(rnd)};
 }
 
-void run_experiment(int n, int m, int trials) {
-    Board board(n);
-    RandomCell generator(n);
+void run_experiment(int board_size, int num_sel_cells, int trials) {
+    if (num_sel_cells <=0) {
+        throw std::invalid_argument("Number of selected cells must be > 0");
+    }
+    if (trials <= 0) {
+        throw std::invalid_argument("Number of trials must be > 0");
+    }
+
+    Board board(board_size);
+    RandomCell generator(board_size);
     Statistics stats;
+
     for (int i=0; i<trials; i++) {
         board.clear();
         std::set<std::pair<int, int>> selected_cells;
-        for (int k=0; k<m; k++) {
+
+        for (int k=0; k<num_sel_cells; k++) {
             selected_cells.insert(generator());
         }
+
         for (const auto &cell : selected_cells) {
             board.mark_cell(cell.first, cell.second);
             std::vector<std::pair<int, int>> neighbors = board.get_neighbors(cell.first, cell.second);
+
             for (const auto &neighbor : neighbors) {
                 board.mark_cell(neighbor.first, neighbor.second);
             }
         }
+
         stats.add_result(board.get_free_zone_size());
     }
+    
     stats.print_summary();
 }
 
@@ -103,7 +121,9 @@ double Statistics::mean() const {
 }
 
 double Statistics::median() const {
-    if (m_results.empty()) return 0.0;
+    if (m_results.empty()) {
+        return 0.0;
+    }
     std::vector<int> sorted = m_results;
     std::sort(sorted.begin(), sorted.end());
     size_t n = sorted.size();
