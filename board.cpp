@@ -3,23 +3,23 @@
 #include <stdexcept>
 #include <algorithm>
 
-RandomCell::RandomCell(int b_size)
+RandomCell::RandomCell(size_t b_size)
     : board_size(b_size), rnd(std::random_device()()) {
-    if (b_size <= 0) {
+    if (b_size == 0) {
         throw std::invalid_argument("Board size must be > 0");
     }
-    dist = std::uniform_int_distribution<>(0, board_size - 1);
+    dist = std::uniform_int_distribution<>(0, (int)board_size - 1);
     }
 
 std::pair<int, int> RandomCell::operator()() {
     return {dist(rnd), dist(rnd)};
 }
 
-void run_experiment(int board_size, int num_sel_cells, int trials) {
-    if (num_sel_cells <=0) {
+void run_experiment(size_t board_size, size_t num_sel_cells, size_t trials) {
+    if (num_sel_cells ==0) {
         throw std::invalid_argument("Number of selected cells must be > 0");
     }
-    if (trials <= 0) {
+    if (trials == 0) {
         throw std::invalid_argument("Number of trials must be > 0");
     }
 
@@ -27,31 +27,26 @@ void run_experiment(int board_size, int num_sel_cells, int trials) {
     RandomCell generator(board_size);
     Statistics stats;
 
-    for (int i=0; i<trials; i++) {
+    for (size_t i=0; i<trials; i++) {
         board.clear();
         std::set<std::pair<int, int>> selected_cells;
-
-        for (int k=0; k<num_sel_cells; k++) {
+        for (size_t k=0; k<num_sel_cells; k++) {
             selected_cells.insert(generator());
         }
-
         for (const auto &cell : selected_cells) {
             board.mark_cell(cell.first, cell.second);
             std::vector<std::pair<int, int>> neighbors = board.get_neighbors(cell.first, cell.second);
-
             for (const auto &neighbor : neighbors) {
                 board.mark_cell(neighbor.first, neighbor.second);
             }
         }
-
         stats.add_result(board.get_free_zone_size());
     }
-    
     stats.print_summary();
 }
 
-Board::Board(int size) : size(size), cells(size, std::vector<bool>(size, false)) {
-    if (size <= 0) {
+Board::Board(size_t size) : size(size), cells(size, std::vector<bool>(size, false)) {
+    if (size == 0) {
         throw std::invalid_argument("Board size must be > 0");
     }
 }
@@ -93,15 +88,15 @@ void Board::mark_cell(int row, int col) {
 }
 
 int Board::get_free_zone_size() const {
-    int count = 0;
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    size_t count = 0;
+    for (size_t i = 0; i < size; i++) {
+        for (size_t j = 0; j < size; j++) {
             if (!cells[i][j]) {
                 count++;
             }
         }
     }
-    return count;
+    return (int)count;
 }
 
 

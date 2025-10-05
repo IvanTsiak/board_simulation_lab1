@@ -1,16 +1,18 @@
+// Compiler: MSVC
+// Authors (K-24): Ivan Tsiak, Andriy Sushchenko
 #include <iostream>
 #include "board.h"
 
 int main() {
-    int n = 20;
-    int trials = 1000;
+    size_t n = 20;
+    size_t trials = 800;
 
-    std::vector<int> values = {10, 20, 50, 100, 200};
+    std::vector<size_t> values = {10, 20, 50, 100, 200};
 
-    std::cout << "\nn=" << n << "\ntrials=" << trials << std::endl;
+    std::cout << "\nn = " << n << "\ntrials = " << trials << std::endl;
 
     try {
-        for (int m : values) {
+        for (size_t m : values) {
             std::cout << "\nm = " << m << " :\n";
             run_experiment(n, m, trials);
         }
@@ -21,6 +23,6 @@ int main() {
         std::cout << "Somethig went wrong!" << std::endl;
         return 0;
     }
-    
+
     return 0;
 }
